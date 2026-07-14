@@ -6,6 +6,12 @@
 - Flutter **3.27 أو أحدث** (الكود يستخدم `withValues`)
 - حساب Supabase الحالي نفسه (نفس المشروع المستخدم في الموقع)
 
+## التشغيل من VS Code
+1. ثبّت إضافتي **Flutter** و**Dart** من المتجر (VS Code سيقترحهما تلقائياً عند فتح المجلد بفضل `.vscode/extensions.json`).
+2. نفّذ خطوات "خطوات التشغيل" أدناه أولاً (مفتاح Supabase + توليد مجلدات المنصات).
+3. افتح تبويب **Run and Debug** (`Ctrl+Shift+D`) واختر من القائمة أعلى الشاشة أحد الإعدادات الجاهزة (`calsnap (Debug)` مثلاً)، أو اضغط `F5` مباشرة.
+4. لاختيار الجهاز/المحاكي: من شريط الحالة أسفل VS Code اضغط على اسم الجهاز، أو نفّذ من لوحة الأوامر (`Ctrl+Shift+P`) أمر **Flutter: Select Device**.
+
 ## خطوات التشغيل
 
 ### 1) مفتاح Supabase
@@ -15,10 +21,11 @@
 ### 2) توليد مجلدات المنصات وتشغيل التطبيق
 ```bash
 cd calsnap_flutter
-flutter create . --platforms=android,ios
+flutter create . --platforms=android,ios,web
 flutter pub get
 flutter run
 ```
+> هذا الأمر آمن ولا يمس أي كود موجود — فقط يضيف مجلدات `android/` و`ios/` و`web/` الناقصة (أيقونات، Gradle، Xcode...) دون التأثير على `lib/` أو `pubspec.yaml`.
 
 ### 3) أذونات الكاميرا
 **أندرويد** — أضف داخل `android/app/src/main/AndroidManifest.xml` قبل `<application>`:
@@ -26,9 +33,9 @@ flutter run
 <uses-permission android:name="android.permission.CAMERA"/>
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
-> حزمة `camera` تتطلب `minSdkVersion 21` أو أعلى في `android/app/build.gradle`.
+> حزمة `camera` تتطلب `minSdkVersion 21` أو أعلى — القيمة الافتراضية من `flutter create` كافية.
 
-**iOS** — أضف داخل `ios/Runner/Info.plist`:
+**iOS** — أضف داخل `ios/Runner/Info.plist` (قبل `</dict>` الأخيرة):
 ```xml
 <key>NSCameraUsageDescription</key>
 <string>نستخدم الكاميرا لتصوير وجباتك وتحليلها</string>

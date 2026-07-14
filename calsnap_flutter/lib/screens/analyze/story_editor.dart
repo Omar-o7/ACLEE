@@ -30,8 +30,8 @@ class StoryEditor extends StatefulWidget {
 
 class _BadgeState {
   Offset position;
-  double scale;
-  double rotation;
+  double scale = 1;
+  double rotation = 0;
   bool visible;
   // gesture baselines
   double _baseScale = 1;
@@ -39,8 +39,6 @@ class _BadgeState {
 
   _BadgeState({
     required this.position,
-    this.scale = 1,
-    this.rotation = 0,
     this.visible = true,
   });
 }

@@ -6,7 +6,6 @@ import '../../core/theme/app_theme.dart';
 import '../../widgets/fade_up.dart';
 import '../../widgets/ambient_background.dart';
 import '../../core/i18n/app_translations.dart';
-import '../../models/models.dart';
 import '../../services/supabase_service.dart';
 import '../../widgets/glass_card.dart';
 
