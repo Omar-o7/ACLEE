@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -114,12 +113,12 @@ class _ResultViewState extends State<ResultView> {
                   fit: StackFit.expand,
                   children: [
                     Image.memory(widget.imageBytes, fit: BoxFit.cover),
-                    DecoratedBox(
+                    const DecoratedBox(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          stops: const [0.45, 1],
+                          stops: [0.45, 1],
                           colors: [
                             Colors.transparent,
                             AppColors.background,

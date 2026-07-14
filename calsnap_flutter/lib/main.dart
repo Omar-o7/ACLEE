@@ -6,15 +6,25 @@ import 'core/theme/app_theme.dart';
 import 'core/i18n/app_translations.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/main_shell.dart';
+import 'services/supabase_service.dart';
 
 // ⚠️ عدّل هذه القيم لمشروعك على Supabase (نفس قيم .env في مشروع الويب)
 const supabaseUrl = 'https://bslzeadleuvqunzzsrum.supabase.co';
 const supabaseAnonKey = 'ضع_مفتاح_ANON_هنا';
 
+/// وضع تجريبي تلقائي: يعمل التطبيق ببيانات وهمية محلية بدون أي اتصال
+/// حقيقي بـ Supabase طالما لم يُستبدل مفتاح anon أعلاه بعد.
+/// بمجرد وضع مفتاحك الحقيقي، يتوقف هذا الوضع تلقائياً.
+const kDemoMode = supabaseAnonKey == 'ضع_مفتاح_ANON_هنا';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('ar');
-  await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
+  SupabaseService.demoMode = kDemoMode;
+  if (!kDemoMode) {
+    await Supabase.initialize(
+        url: supabaseUrl, publishableKey: supabaseAnonKey);
+  }
   runApp(const CalSnapApp());
 }
 
@@ -47,6 +57,14 @@ class _AuthGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kDemoMode) {
+      return const Banner(
+        message: 'DEMO',
+        location: BannerLocation.topEnd,
+        color: AppColors.primary,
+        child: MainShell(),
+      );
+    }
     return StreamBuilder<AuthState>(
       stream: Supabase.instance.client.auth.onAuthStateChange,
       builder: (context, snapshot) {
